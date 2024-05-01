@@ -1,14 +1,14 @@
 
 // Use hardware RNG peripheral
 // Working with HAL, LL Driver (untested)
-#if defined(STM32F4) || defined(STM32L4)
+#if defined(STM32F4) || defined(STM32L4) || defined(STM32L0)
 
 #    if defined(STM32F4)
 #        include "stm32f4xx.h"
 #    elif defined(STM32L4)
 #        include "stm32l4xx_hal_rng.h"
-
-static RNG_HandleTypeDef RngHandle;
+#    elif defined(STM32L0)
+#        include "stm32l0xx_hal_rng.h"
 #    endif
 
 static int
@@ -33,6 +33,11 @@ hydro_random_init(void)
 #    elif defined(STM32L4)
     RngHandle.Instance = RNG;
     HAL_RNG_Init(&RngHandle);
+
+#    elif defined(STM32L0)
+    RNG_HandleTypeDef RngHandle;
+    RngHandle.Instance = RNG;
+    HAL_RNG_Init(&RngHandle);
 #    endif
 
     hydro_hash_init(&st, ctx, NULL);
@@ -44,7 +49,7 @@ hydro_random_init(void)
         }
 
         r = RNG->DR;
-#    elif defined(STM32L4)
+#    elif defined(STM32L4) || defined(STM32L0)
         if (HAL_RNG_GenerateRandomNumber(&RngHandle, &r) != HAL_OK) {
             continue;
         }

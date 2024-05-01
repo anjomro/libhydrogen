@@ -27,7 +27,7 @@ static TLS struct {
 #    include "random/mbed.h"
 #elif defined(RIOT_VERSION)
 #    include "random/riot.h"
-#elif defined(STM32F4) || defined(STM32L4)
+#elif defined(STM32F4) || defined(STM32L4) || defined(STM32L0)
 #    include "random/stm32.h"
 #elif defined(__RTTHREAD__)
 #    include "random/rtthread.h"
