@@ -8,6 +8,7 @@
 #    elif defined(STM32L4)
 #        include "stm32l4xx_hal_rng.h"
 #    elif defined(STM32L0)
+#        include "stm32l0xx.h"
 #        include "stm32l0xx_hal_rng.h"
 #    endif
 
